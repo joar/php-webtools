@@ -1,6 +1,5 @@
 <?php
-	class tools
-	{
+	class tools {
 		public static function preint_r( $data ) {
 			foreach ( func_get_args() as $val ) {
 				echo '<pre>';
@@ -15,9 +14,8 @@
 				echo '</pre>';
 			}
 		}
-		public static function handle($string)
-		{
-			$healthy = array('.', '@', ' ', 'å', 'ä', 'ö');
+		public static function handle($string) {
+			$healthy = array('.', '@', ' ', 'ï¿½', 'ï¿½', 'ï¿½');
 			$yummy = array('-', '-', '-', 'a', 'a', 'o');
 			$string = strtolower(str_replace($healthy, $yummy, $string));
 			$string = preg_replace('/-{1,}/', '-', $string);
@@ -60,30 +58,26 @@
 			$result .= PHP_EOL;
 			return $result;
 		}
-		function fetch_files_from_folder($dir)
-		{
+		function fetch_files_from_folder($dir) {
 			$files = scandir($dir);
-			foreach($files as $key => $file)
-			{
+			foreach($files as $key => $file) {
 				if($file == '.' || $file == '..')
 				{
 					unset($files[$key]);
 				}
-				if(!is_link($dir . $file) && is_dir($dir . $file) && $file != '.' && $file != '..')
-		    {
-		    	$subfiles = tools::fetch_files_from_folder($dir . $file . '/');
-		    	foreach($subfiles as $subfile)
-		    	{
-		    		array_push($files, $file . '/' . $subfile);
-		    	}
-		    	unset($files[$key]);
-		    }
+				if(!is_link($dir . $file) && is_dir($dir . $file) && $file != '.' && $file != '..') {
+			    	$subfiles = tools::fetch_files_from_folder($dir . $file . '/');
+			    	foreach($subfiles as $subfile)
+			    	{
+			    		array_push($files, $file . '/' . $subfile);
+			    	}
+			    	unset($files[$key]);
+			    }
 			}
 			return $files;
 		}
 		
-		function time_readable($duration)
-		{
+		function time_readable($duration) {
 			$days = floor($duration/86400);
 			$hrs = floor(($duration - $days * 86400) / 3600);
 			$min = floor(($duration - $days * 86400 - $hrs * 3600) / 60);
